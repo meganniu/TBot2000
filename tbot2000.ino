@@ -1,4 +1,8 @@
-int pump = 52;
+#include <AFMotor.h>
+
+AF_Stepper teabag(200, 1);
+
+int pump = 50;
 int kettle = 40;
 
 int digits[] = {33, 32, 31, 30};
@@ -23,7 +27,14 @@ void show_digit(int n) {
 }
 
 void setup() {
+  Serial.begin(9600);
+
+  // Set up motors
   pinMode(pump, OUTPUT);
+  digitalWrite(pump, LOW);
+
+  teabag.setSpeed(60);
+
   pinMode(kettle, INPUT);
 
   for (int i = 0; i < 4; i++) {
@@ -35,4 +46,3 @@ void setup() {
 void loop() {
   digitalWrite(pump, digitalRead(kettle));
 }
-

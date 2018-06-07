@@ -6,6 +6,8 @@ int pump = 50;
 int kettle = 40;
 
 int digits[] = {33, 32, 31, 30};
+int timer_pot = A15;
+int steep_time = 4;
 
 void show_digit(int n) {
   if (n < 0) {
@@ -13,7 +15,7 @@ void show_digit(int n) {
       digitalWrite(digits[i], LOW);
     }
   }
-  
+
   int bits[] = {
     (n & B1000) >> 3,
     (n & B0100) >> 2,
@@ -41,8 +43,17 @@ void setup() {
     pinMode(digits[i], OUTPUT);
     digitalWrite(digits[i], LOW);
   }
+  show_digit(steep_time);
+
+  pinMode(timer_pot, INPUT);
 }
 
 void loop() {
   digitalWrite(pump, digitalRead(kettle));
+
+  // Read pot to determine steep time
+  int reading = analogRead(timer_pot)
+  steep_time = constrain(round(reading/(3.2*256.0) * 9), 0, 9); // 3.2: magic scaling factor
+
+  show_digit(steep_time);
 }

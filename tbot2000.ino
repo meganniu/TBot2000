@@ -3,7 +3,7 @@
 AF_Stepper teabag(200, 2);
 
 int pump = 50;
-int kettle = 40;
+int kettle = 28;
 
 // Kettle debounce variables
 int kettle_on = 0;             // the current reading from the input pin
@@ -127,8 +127,8 @@ void loop() {
   // Wait for tea to steep
   digitalWrite(steep_indicator, HIGH);
   for (int i = steep_time; i >= 0; i--) {
-    show_digit(i);
     delay(60000); // Wait one minute
+    show_digit(i);
   }
   digitalWrite(steep_indicator, LOW);
 
